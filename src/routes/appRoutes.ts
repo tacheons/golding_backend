@@ -1,6 +1,7 @@
 import { Router } from "express";
 import userRoutes from "./userRoutes";
 import authRoutes from "./authRoutes";
+import companyRoutes from "./companyRoutes";
 
 /**
  * @implementaionNote :
@@ -19,6 +20,6 @@ import authRoutes from "./authRoutes";
  */
 let appRoutes = Router();
 
-appRoutes.use([authRoutes, userRoutes]);
+appRoutes.use([authRoutes, userRoutes, companyRoutes]);
 
 export default appRoutes;
