@@ -3,30 +3,26 @@ import { AuthController } from "../controllers/AuthController";
 
 /**
  * @implementaionNote :
- * userRoutes is a route component that establishes and exports all the game routes,
+ * autRoutes is a route component that establishes and exports all the authentication routes,
  * used in the application as an api endpoints for external application consumption or integration.
- * it uses the userController to implement the specific details, when the route is called.
+ * it uses the authController to implement the specific details, when the route is called.
  *
  * @return
  * router with preconfigured routes
  *
- * @author & @contributiors
- * fabian Madueke
- *
+ * @author
  * @since
  * 1.0.0
  */
-
-// const userRoutes = Router();
 const authRoutes = Router();
-// userRoutes.use(authMiddleware);
 
 /**
  * @desc
- * the whitelist or whitelable is use to extra signature
+ * the label is use for extra signature and
  * uniformity in the routes, to ensure uniqueness, of the endpoints
+ * application name: gc - golding capital
  */
-const whitelist = "/api/gc_app";
+const label = "/api/v1/gc";
 
 //routes
 
@@ -40,7 +36,7 @@ let authController = new AuthController();
  * @since
  * v1.0.0
  */
-authRoutes.post("/login", [authController.login]);
+authRoutes.post(label + "/login", [authController.login]);
 
 /**
  * @desc
@@ -50,6 +46,6 @@ authRoutes.post("/login", [authController.login]);
  * @since
  * v1.0.0
  */
-authRoutes.post("/login", [authController.logout]);
+authRoutes.post(label + "/login", [authController.logout]);
 
 export default authRoutes;
