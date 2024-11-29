@@ -57,8 +57,8 @@ export const AppDataSource = new DataSource({
  */
 // export const AppDataSource = new DataSource({
 //   type: "sqlite",
-//   database: "golding_capital.sql",
-//   synchronize: false,
+//   database: "golding_capital",
+//   synchronize: true,
 //   logging: false,
 //   entities: [__dirname + "/entity/*{.ts,.js}"], //   entities: [User],
 //   migrations: [],
