@@ -5,7 +5,7 @@ import serverConfig from "../modules/configurations/serverConfig";
 
 /**
  * @implementation
- * auth middleware authenticates the user request and verify
+ * authentication middleware authenticates the user request and verify
  * it's validity
  *
  * @params {*} req
