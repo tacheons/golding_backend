@@ -5,18 +5,17 @@ import { authMiddleware } from "../middlewares/authMiddleware";
 
 /**
  * @implementaionNote :
- * userRoutes is a route component that establishes and exports all the game routes,
+ * userRoutes is a route component that establishes and exports all the user routes,
  * used in the application as an api endpoints for external application consumption or integration.
  * it uses the userController to implement the specific details, when the route is called.
  *
  * @return
  * router with preconfigured routes
  *
- * @author & @contributiors
- * fabian Madueke
+ * @author
  *
  * @since
- * 1.0.0
+ * v1.0.0
  */
 
 // const userRoutes = Router();
@@ -25,10 +24,11 @@ const userRoutes = Router();
 
 /**
  * @desc
- * the whitelist or whitelable is use to extra signature
+ * the label is use to extra signature
  * uniformity in the routes, to ensure uniqueness, of the endpoints
+ * application name: gc - golding capital
  */
-const whitelist = "/api/users";
+const label = "/api/v1/gc";
 
 //routes
 
@@ -38,24 +38,24 @@ let userController = new UserController();
  * @desc get users
  * @route GET /users
  */
-userRoutes.get("/users", [authMiddleware, userController.all]);
+userRoutes.get(label + "/users", [authMiddleware, userController.all]);
 
 /**
  * @desc get one user
  * @route GET /users/:id
  */
-userRoutes.get("/users/:id", userController.one);
+userRoutes.get(label + "/users/:id", userController.one);
 
 /**
  * @desc save user
  * @route POST /user
  */
-userRoutes.post("/user", userController.save);
+userRoutes.post(label + "/user", userController.save);
 
 /**
  * @desc delete user
  * @route DELETE /users/:id
  */
-userRoutes.delete("/users/:id", userController.remove);
+userRoutes.delete(label + "/users/:id", userController.remove);
 
 export default userRoutes;
