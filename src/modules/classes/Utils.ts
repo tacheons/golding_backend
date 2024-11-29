@@ -2,7 +2,7 @@ import * as jwt from "jsonwebtoken";
 import serverConfig from "../configurations/serverConfig";
 
 /**
- * @implementaionNote
+ * @implementaion
  * Utility class for all utility functions
  *
  * @params
