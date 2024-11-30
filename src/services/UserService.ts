@@ -114,23 +114,7 @@ export class UserService {
    * v1.0.0
    */
   async save(user: User) {
-    try {
-      /**
-       * check if user already exist
-       */
-      if (!(await this.userRepository.findOneBy({ email: user.email }))) {
-        return this.userRepository.save(user);
-      } else {
-        return { error: "user already exist" };
-      }
-    } catch (error) {
-      console.log(error);
-      if (error.code === "ER_DUP_ENTRY") {
-        return { error: "user already exist" };
-      } else {
-        return { error: "unable to save user" };
-      }
-    }
+    return await this.userRepository.save(user);
   }
 
   /**

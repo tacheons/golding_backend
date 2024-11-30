@@ -88,16 +88,26 @@ export class UserController {
       // Store hash in your password DB.
       user.password = hashedPassword;
       let userService = new UserService();
-      let result = await userService.save(user);
 
-      /**
-       * client customized data use for authentication in the client site
-       */
-      let cleintAuthData = {
-        token: await new Utils().createToken(result.id),
-        id: result.id,
-      };
-      res.status(200).json(cleintAuthData);
+      try {
+        let result = await userService.save(user);
+
+        /**
+         * client customized data use for authentication in the client site
+         */
+        let cleintAuthData = {
+          token: await new Utils().createToken(result.id),
+          id: result.id,
+        };
+        res.status(200).json(cleintAuthData);
+      } catch (error) {
+        console.log(error);
+        if (error.code === "ER_DUP_ENTRY") {
+          res.status(401).json({ error: "user already exist" });
+        } else {
+          res.status(401).json({ error: "unable to save user" });
+        }
+      }
     });
   }
 
