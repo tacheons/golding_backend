@@ -53,6 +53,8 @@ export class AuthController {
             //   console.log(user);
           }
           res.json(user);
+        } else {
+          res.status(401).json({ error: "invalid login" });
         }
       });
     } catch (error) {
