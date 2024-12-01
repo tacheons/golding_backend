@@ -1,6 +1,6 @@
 # Golding Backend Application
 
-This is a brief documentation of the Golding Backend application, you can get the detailed pdf documentation of the project from the email i sent as regards to this project.
+This is a brief documentation of the Golding Backend application, you can get the detailed `pdf` documentation of the project from the email i sent as regards to this project.
 
 ## Backend Application Setup:
 Setup steps;
