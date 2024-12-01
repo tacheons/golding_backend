@@ -27,7 +27,9 @@ All you need to set the application up with your database is to do the following
 
 This is schematics that develop the full blown backend that services all the user request via an API, as a server with multiple endpoint entry, it can service various services or frontends that that integrates with it
 
+
 ![backend](https://github.com/user-attachments/assets/0a8910ea-8638-4d2d-a0c7-67f39da18af1)
+
 
 ## Choice of Tech Stacks:
 
