@@ -27,9 +27,10 @@ All you need to set the application up with your database is to do the following
 
 This is schematics that develop the full blown backend that services all the user request via an API, as a server with multiple endpoint entry, it can service various services or frontends that that integrates with it
 
-[!Backend Architectural Diagram](images/backend.png)
+![backend](https://github.com/user-attachments/assets/0a8910ea-8638-4d2d-a0c7-67f39da18af1)
 
 ## Choice of Tech Stacks:
+
 
 Base on the requirement analysis, the type of system to be developed, the Domain Driven Design (DDD) and the possible user metric, as regard to level of usage and interaction, the design structure and the tech stack can be determined.
 Below is my choice of tech stack base on my analysis and the information I have gotten so far on the application.
