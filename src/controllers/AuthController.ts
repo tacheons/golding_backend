@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { AuthService } from "../services/AuthService";
 import { UserService } from "../services/UserService";
+import { HTTPStatus } from "../modules/objects/HTTPStatus";
 import * as bcrypt from "bcrypt";
 import { Utils } from "../modules/classes/Utils";
 
@@ -52,14 +53,21 @@ export class AuthController {
             user = { id: user.id, token: token };
             //   console.log(user);
           }
-          res.json(user);
+          res.status(HTTPStatus.SUCCESSFUL.OK).json(user);
         } else {
-          res.status(401).json({ error: "invalid login" });
+          res
+            .status(HTTPStatus.CLIENT_ERROR.UNAUTHORIZED)
+            .json({ error: "invalid login" });
         }
       });
     } catch (error) {
+      /**
+       * handle server errors
+       */
       console.log(error);
-      res.status(400).json({ error: "user doest not exist" });
+      res
+        .status(HTTPStatus.SERVER_ERROR.INTERNAL_SERVER_ERROR)
+        .json({ error: "internal server error, please contact the admin" });
     }
   }
 

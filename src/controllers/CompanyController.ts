@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { CompanyService } from "../services/CompanyService";
+import { HTTPStatus } from "../modules/objects/HTTPStatus";
 import { Utils } from "../modules/classes/Utils";
 
 /**
@@ -31,10 +32,26 @@ export class CompanyController {
    */
   async competencies(req: Request, res: Response, next: NextFunction) {
     const { email, password } = req.body;
-    let companyService = new CompanyService();
-    let competencies = await companyService.competencies();
-    console.log(competencies);
 
-    res.json(competencies);
+    try {
+      let competencies = await new CompanyService().competencies();
+      console.log(competencies);
+
+      if (competencies) {
+        res.status(HTTPStatus.SUCCESSFUL.OK).json(competencies);
+      } else {
+        res
+          .status(HTTPStatus.CLIENT_ERROR.NOT_FOUND)
+          .json({ error: "resource not found" });
+      }
+    } catch (error) {
+      /**
+       * handle server errors
+       */
+      console.log(error);
+      res
+        .status(HTTPStatus.SERVER_ERROR.INTERNAL_SERVER_ERROR)
+        .json({ error: "internal server error, please contact the admin" });
+    }
   }
 }

@@ -1,13 +1,14 @@
 import { Request, Response, NextFunction } from "express";
 import { UserService } from "../services/UserService";
-import { User } from "../entity/User";
+import { User } from "../entities/User";
+import { HTTPStatus } from "../modules/objects/HTTPStatus";
 import * as bcrypt from "bcrypt";
 import { Utils } from "../modules/classes/Utils";
 
 /**
  * @implementaionNote
- * AuthController is the main controller for all route related to authentication
- * it's integrated with the AuthService to process all authentication related
+ * UserController is the main controller for all route related to user and
+ * it's integrated with the UserService to process all user related
  * requests
  *
  * @return
@@ -36,7 +37,7 @@ export class UserController {
    */
   async all(req: Request, res: Response, next: NextFunction) {
     const users = await new UserService().all();
-    res.json(users);
+    res.status(HTTPStatus.SUCCESSFUL.OK).json(users);
   }
 
   /**
@@ -53,12 +54,21 @@ export class UserController {
   async one(req: Request, res: Response, next: NextFunction) {
     const id = parseInt(req.params.id);
 
-    const user = await this.userService.one(id);
+    try {
+      const user = await this.userService.one(id);
 
-    if (!user) {
-      return "unregistered user";
+      if (!user) {
+        return res
+          .status(HTTPStatus.CLIENT_ERROR.NOT_FOUND)
+          .json({ error: "user not found" });
+      }
+      return res.status(HTTPStatus.SUCCESSFUL.OK).json(user);
+    } catch (error) {
+      console.log(error);
+      res
+        .status(HTTPStatus.SERVER_ERROR.INTERNAL_SERVER_ERROR)
+        .json({ error: "internal server error, please contact the admin" });
     }
-    return user;
   }
 
   /**
@@ -81,31 +91,37 @@ export class UserController {
   async save(req: Request, res: Response, next: NextFunction) {
     let user = Object.assign(new User(), req.body);
     console.log(req.body);
-
     //password encryption
     let saltRounds = 10;
     bcrypt.hash(user.password, saltRounds, async (err, hashedPassword) => {
       // Store hash in your password DB.
       user.password = hashedPassword;
-      let userService = new UserService();
+      // let userService = new UserService();
 
       try {
-        let result = await userService.save(user);
+        let result = await new UserService().save(user);
 
         /**
          * client customized data use for authentication in the client site
          */
-        let cleintAuthData = {
+        let clientAuthData = {
           token: await new Utils().createToken(result.id),
           id: result.id,
         };
-        res.status(200).json(cleintAuthData);
+        res.status(HTTPStatus.SUCCESSFUL.OK).json(clientAuthData);
       } catch (error) {
+        /**
+         * handle server errors
+         */
         console.log(error);
         if (error.code === "ER_DUP_ENTRY") {
-          res.status(401).json({ error: "user already exist" });
+          res
+            .status(HTTPStatus.CLIENT_ERROR.CONFLICT)
+            .json({ error: "user already exist" });
         } else {
-          res.status(401).json({ error: "unable to save user" });
+          res
+            .status(HTTPStatus.CLIENT_ERROR.CONFLICT)
+            .json({ error: "unable to save user" });
         }
       }
     });

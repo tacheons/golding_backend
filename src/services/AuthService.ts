@@ -1,6 +1,6 @@
 import { AppDataSource } from "../data-source";
 import { NextFunction, Request, Response } from "express";
-import { User } from "../entity/User";
+import { User } from "../entities/User";
 
 /**
  * @implementaion
@@ -23,7 +23,7 @@ export class AuthService {
 
   /**
    * @implementaion
-   * This method service the user login, by fetching the required data 
+   * This method service the user login, by fetching the required data
    * from the database
    *
    * @return
